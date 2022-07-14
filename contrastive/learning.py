@@ -28,6 +28,7 @@ from contrastive import networks as contrastive_networks
 import jax
 import jax.numpy as jnp
 import optax
+from contrastive.report import reporter
 import reverb
 
 
@@ -214,6 +215,7 @@ class ContrastiveLearner(acme.Learner):
           'logsumexp': logsumexp.mean(),
       }
 
+      # reporter(dict(critic_loss=float(loss)))
       return loss, metrics
 
     def actor_loss(policy_params,
@@ -255,6 +257,7 @@ class ContrastiveLearner(acme.Learner):
           q_action = jnp.min(q_action, axis=-1)
         actor_loss = alpha * log_prob - jnp.diag(q_action)
 
+      # reporter(dict(actor_loss=float(jnp.mean(actor_loss))))
       return jnp.mean(actor_loss)
 
     alpha_grad = jax.value_and_grad(alpha_loss)
@@ -279,6 +282,7 @@ class ContrastiveLearner(acme.Learner):
         (critic_loss, critic_metrics), critic_grads = critic_grad(
             state.q_params, state.policy_params, state.target_q_params,
             transitions, key_critic)
+        # reporter(dict(critic_loss=critic_loss.numpy()))
 
       actor_loss, actor_grads = actor_grad(state.policy_params, state.q_params,
                                            alpha, transitions, key_actor)
@@ -390,6 +394,7 @@ class ContrastiveLearner(acme.Learner):
 
     # Compute elapsed time.
     timestamp = time.time()
+    reporter(dict(actor_loss=float(metrics['actor_loss']), critic_loss=float(metrics['critic_loss'])))
     elapsed_time = timestamp - self._timestamp if self._timestamp else 0
     self._timestamp = timestamp
 

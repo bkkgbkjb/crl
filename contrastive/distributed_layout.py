@@ -195,7 +195,7 @@ class DistributedLayout:
       adder = self._builder.make_adder(replay)
       env = self._environment_factory(0)
       dataset = env.get_dataset()  # pytype: disable=attribute-error
-      for t in tqdm.trange(dataset['observations'].shape[0]):
+      for t in tqdm.trange(int(dataset['observations'].shape[0])):
         discount = 1.0
         if t == 0 or dataset['timeouts'][t - 1]:
           step_type = dm_env.StepType.FIRST

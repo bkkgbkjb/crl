@@ -109,7 +109,7 @@ def main(_):
   #   antmaze: offline_ant_{umaze,umaze_diverse,
   #                             medium_play,medium_diverse,
   #                             large_play,large_diverse}
-  env_name = 'sawyer_window'
+  env_name = 'offline_ant_umaze'
   params = {
       'seed': 0,
       'use_random_actor': True,
