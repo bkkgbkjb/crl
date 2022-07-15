@@ -284,7 +284,7 @@ class DistributedLayout:
                                             logger, observers=self._observers)
 
   def coordinator(self, counter, max_actor_steps):
-    return lp_utils.StepsLimiter(counter, max_actor_steps)
+    return lp_utils.StepsLimiter(counter, 3000)
 
   def build(self, name='agent', program = None):
     """Build the distributed agent topology."""

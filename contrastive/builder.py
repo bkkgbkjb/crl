@@ -187,6 +187,7 @@ class ContrastiveBuilder(builders.ActorLearnerBuilder):
         return tf.transpose(t, perm)
       dataset = dataset.batch(self._config.batch_size, drop_remainder=True)
       dataset = dataset.map(
+          # shape of transition: (1024 /* batch_size */, 700 /* steps */, 31 /* dims */)
           lambda transition: tree.map_structure(_transpose_fn, transition))
       dataset = dataset.unbatch()
       # end transpose_shuffle

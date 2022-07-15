@@ -27,7 +27,7 @@ class ContrastiveConfig:
   """Configuration options for contrastive RL."""
 
   env_name: str = ''
-  max_number_of_steps: int = 1_000_000
+  max_number_of_steps: int = 1_000
   num_actors: int = 4
 
   # Loss options

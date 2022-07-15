@@ -146,7 +146,7 @@ def main(_):
   if env_name.startswith('offline_ant'):
     params.update({
         # Effectively remove the rate-limiter by using very large values.
-        'samples_per_insert': 1_000_000,
+        'samples_per_insert': 1_000,
         'samples_per_insert_tolerance_rate': 100_000_000.0,
         # For the actor update, only use future states as goals.
         'random_goals': 0.0,
